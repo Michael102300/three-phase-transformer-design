@@ -146,7 +146,7 @@ def calculus(parameters: dict, language: str):
     list.append(alpha_2)
 
     # Step 20: Calculate the watts per kilogram
-    Wk = 0.0005577*(60**1.68)*(1.40**1.86)
+    Wk = 0.0005577*(60**1.68)*(B**1.86)
     Wk = round(Wk, 2)
     list.append(Wk)
 
