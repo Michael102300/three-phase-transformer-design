@@ -9,6 +9,16 @@ def get_type_of_wire(magnitude: float, data: dict):
     awg = sorted(diff)[0]
     return [keys[diff.index(awg)]][0]
 
+
+def get_lamination(magnitude: float, data: dict):
+    keys = list(data.keys())
+    diff = []
+    for i in keys:
+        diff.append(round(abs(data[i][3]-magnitude), 5))
+    kg = sorted(diff)[0]
+    return [keys[diff.index(kg)]][0]
+
+
 def calculus(parameters: dict, language: str):
 
     Vi = parameters["Input Voltage"]
@@ -43,13 +53,14 @@ def calculus(parameters: dict, language: str):
     Kg = round(Kg)
     list.append(Kg)
 
-    # Step 4: Some info for now
-    Wtfe = 2.751
-    Ac = 6.129
-    Wa = 29
-    MLT = 16.7
-    Wa = 29
-    At = 730
+    # Step 4: Core Number for Lamination
+    lamination = get_lamination(Kg, lamination_table)
+    Wtfe = lamination_table[lamination][0]
+    Ac = lamination_table[lamination][5]
+    Wa = lamination_table[lamination][2]
+    MLT = lamination_table[lamination][1]
+    At = lamination_table[lamination][4]
+    list.append(lamination)
 
     # Step 5: Calculate the number of primary turns
     Np = (Vi*(10**4))/(4.44*B*Ac*f)  # Turns
